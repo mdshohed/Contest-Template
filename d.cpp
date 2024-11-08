@@ -1,48 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define all(x) begin(x),end(x)
- 
-int main(){
-#ifdef LOCAL
-    ios_base::sync_with_stdio(false),cin.tie(nullptr);
-#else
-    freopen( "in.txt", "r", stdin);
-    //freopen( "out.txt","w", stdout);
-#endif
-    int n, x;  
-    cin >> n >> x; 
-    std::vector<int> a(n);
-    for(int &i: a) cin >> i; 
-    int m = n/2; 
-    vector<ll> left, right; 
-    for(int i = 0; i<(1<<m); i++) {
-        ll sum = 0; 
-        for(int j = 0; j<m; j++){
-            if( i & (1<<j)) {
-                sum += a[j];
-            }
-        } 
-        left.push_back(sum);  
-    } 
-    for(int i = 0; i<(1<<n-m); i++) {
-        ll sum = 0; 
-        for(int j = 0; j<(n-m); j++) {
-            if(i&(1<<j)) {
-                sum += a[m+j]; 
-            }
+
+// Function to calculate the total surface area
+double surfaceArea(double b, double h) {
+    return b * b + 2 * b * sqrt(h * h + (b * b) / 4.0);
+}
+
+// Function to calculate the volume of the pyramid
+double volume(double b, double h) {
+    return (1.0 / 3.0) * b * b * h;
+}
+
+// Function to maximize the volume given the total surface area
+double maximizeVolume(double S) {
+    double low = 0.0, high = S; // Possible range for the base side length b
+    double bestVolume = 0.0;
+
+    // Use binary search to find the maximum volume
+    for (int i = 0; i < 100; i++) { // 100 iterations for precision
+        double b = (low + high) / 2.0;
+        double h = sqrt((S - b * b) / (2 * b)); // Derive h from the surface area formula
+        double currentVolume = volume(b, h);
+
+        if (surfaceArea(b, h) <= S) {
+            bestVolume = max(bestVolume, currentVolume);
+            low = b;
+        } else {
+            high = b;
         }
-        right.push_back(sum); 
     }
-    for(int i: left) cout << i << " ";
-      cout << endl;
-      for(int i: left) cout << i << " ";
-      cout << endl;
-    sort(all(right));
-    ll count = 0; 
-    for(int i = 0; i<left.size(); i++){
-        count += upper_bound(all(right), x - left[i]) - lower_bound(all(right), x - left[i]); 
+    return bestVolume;
+}
+
+int main() {
+#ifndef ONLINE_JUDGE
+    freopen("in.txt", "r", stdin);
+#endif
+    double S;
+    while(cin >> S){
+        if ( S < 0 ) break; 
+        double maxVol = maximizeVolume(S);
+        cout << fixed << setprecision(10) << maxVol << endl;
     }
-    cout << count << endl;  
-    return 0; 
+    return 0;
 }

@@ -11,10 +11,16 @@ int main() {
 #ifndef ONLINE_JUDGE
     freopen("in.txt", "r", stdin);
 #endif 
-    int tc; 
-    cin >> tc; 
-    while(tc--){
-
-    }
-    return 0;
+  ll n; 
+  cin >> n;
+  vector<int> a(n); 
+  for(int &i: a ) cin >> i; 
+  sort(all( a) );
+  int m = a[ n/2 ];
+  ll sum = 0; 
+  for(int i: a ){
+    sum += abs( m - i ); 
+  }
+  cout << sum << endl;  
+  return 0;
 }
