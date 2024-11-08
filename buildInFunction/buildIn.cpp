@@ -58,7 +58,7 @@ int main() {
 	int fx[] = {};
 	int fy[] = {};
 	vector<vector<bool>> flag(c,vector<bool>(d)); 
-	function<void(int, int, int)> dfs = [&](int x, int y, int cnt = 0, int n, int m)-> void {
+	function<void(int, int, int, int, int)> dfs = [&](int x, int y, int cnt = 0, int n, int m)-> void {
 		if ( 0>x || x>=n ) return;
 		if ( 0>y || y>=m ) return;
 		if ( flag[x][y] ) return;
@@ -68,5 +68,9 @@ int main() {
 			dfs(dx, dy, cnt+1, n, m);
 		}
 	};
+	#ifndef LOCAL
+    clock_t tStart = clock();
+    cerr<<fixed<<setprecision(10)<<"\nTime Taken: "<<(double)(clock()- tStart)/CLOCKS_PER_SEC<<endl;
+  #endif 
 	return 0;
 }
