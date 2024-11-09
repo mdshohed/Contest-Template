@@ -1,5 +1,5 @@
 ## Extension: 
  - code-runner
- - c/C++ extension pack
- - c/c++
- - c/C++ themes
+ - C/C++ extension pack
+ - C/c++
+ - C/C++ themes
